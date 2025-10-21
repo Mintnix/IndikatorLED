@@ -1,0 +1,22 @@
+# Gambas Project File 3.0
+Startup=Startmodul
+Version=0.0.1
+Component=gb.image
+Component=gb.gui.qt
+Component=gb.form
+Component=gb.dbus
+Component=gb.gui.trayicon
+Description="Optische  HDD-LED Anzeige für die Taskleiste "
+TabSize=4
+Language=de
+Maintainer=Mintnix
+Address=pcspezialist@arcor.de
+Url=openyourlinux.blogspot.de
+License=General Public License
+PackageName=indikatorled-0.0.1
+Packager=1
+Systems=ubuntu
+SameDependencies=1
+Menus=ubuntu:"Applications/System/Monitoring"
+Categories=ubuntu:"System"
+Groups=ubuntu:"admin"

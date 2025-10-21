@@ -1,0 +1,54 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,41,19)
+  Background = Color.SelectedBackground
+  Text = ("Indikator LED Anzeige")
+  Icon = Picture["led_blau.png"]
+  { Menu1 Menu
+    Text = ("Menu1")
+    Visible = False
+    { Menu2 Menu
+      Text = ("Anzeigen")
+    }
+    { Menu4 Menu
+      Text = ("Info")
+    }
+    { Menu3 Menu
+      Text = ("Beenden")
+    }
+  }
+  { Timer1 #Timer
+    #MoveScaled(26,10)
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(2,2,26,7)
+    Font = Font["Bold,14"]
+    Border = Border.Plain
+    Text = ("HDD-LED : ")
+    Alignment = Align.Center
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(32,2,7,7)
+    Alignment = Align.Center
+    Border = Border.Plain
+  }
+  { TextLabel2 TextLabel
+    MoveScaled(2,10,26,7)
+    Font = Font["Bold,14"]
+    Border = Border.Plain
+    Text = ("USB-LED : ")
+    Alignment = Align.Center
+  }
+  { PictureBox2 PictureBox
+    MoveScaled(32,10,7,7)
+    Alignment = Align.Center
+    Border = Border.Plain
+  }
+  { TrayIcon1 #TrayIcon
+    #MoveScaled(26,2)
+    Visible = True
+    Picture = Picture.Load("led_grau.png")
+    PopupMenu = "Menu1"
+  }
+}

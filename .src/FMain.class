@@ -1,0 +1,99 @@
+' Gambas class file
+
+Public sResultRoot As String
+Private pLED_ROT As Picture = Picture["led_rot.png"]
+Private pLED_GRAU As Picture = Picture["led_grau.png"]
+Private pLED_BLAU As Picture = Picture["led_blau.png"]
+
+
+Public Sub Form_Open()
+    Dim sBefehl As String
+    
+        ''Mountpoint Befehle zum Auffinden der Partitionen
+    sBefehl = "lsblk -r -o NAME,MOUNTPOINT | awk '$2==\"/\"{print $1}'"             'Diese fucking Leerzeichen, die manchmal entstehen, wenn man den Befehl nicht gleich in richtiger Sysntax übergibt, lassen mir graue Haare wachsen!!! 
+    Print sBefehl
+    Shell "lsblk -r -o NAME,MOUNTPOINT | awk '$2==\"/\"{print $1}'" To sResultRoot 
+    sResultRoot = Trim(sResultRoot)
+    Print "Root-Gerät: "; sResultRoot
+    'Timer1.Enabled = True
+    PictureBox1.Picture = pLED_GRAU
+
+    Timer1.Delay = 200
+    Timer1.Start
+End
+
+''Timerfunktion
+Public Sub Timer1_Timer()
+ ' Dim device As String = Me.Tag
+  Dim res As String
+  Dim parts As String[]
+  Static lastRead As Long
+  Static lastWrite As Long
+
+  ' Eintrag aus /proc/diskstats holen
+  'Print sResultRoot
+  Shell "grep ' " & sResultRoot & " ' /proc/diskstats" To res
+    res = Trim(res)
+    'Print res
+  If res = "" Then
+    Message("ROOT - Gerät nicht gefunden!")
+    Return
+  Endif
+
+  ' Split mit True, damit keine leeren Felder entstehen
+  parts = Split(res, " ", "\n", True)
+  'Print res
+
+  ' Sicherheit: Prüfen, ob genug Felder vorhanden sind
+  If parts.Count < 10 Then
+    TextLabel1.Text = "Fehler: Ungültige /proc/diskstats Daten!"
+    Return
+  Endif
+
+  ' Felder laut Kernel-Dokumentation:
+  ' parts[5] = sectors read
+  ' parts[9] = sectors written
+  Dim readNow As Long = Val(parts[5])
+  'Print "Read " & readNow
+  Dim writeNow As Long = Val(parts[9])
+  'Print "Write " & writeNow
+
+  ' Vergleichen mit vorherigen Werten
+  If readNow <> lastRead Then 
+    PictureBox1.Picture = pLED_BLAU
+    TrayIcon1.Picture = pLED_BLAU
+  Else If 
+    writeNow <> lastWrite Then
+    PictureBox1.Picture = pLED_ROT 
+    TrayIcon1.Picture = pLED_ROT
+  Else
+    PictureBox1.Picture = pLED_GRAU 
+    TrayIcon1.Picture = pLED_GRAU
+  Endif 
+  ' Aktuelle Werte speichern
+  lastRead = readNow
+  lastWrite = writeNow
+End
+
+Public Sub Menu3_Click()
+    ' Programm beenden
+    TrayIcon1.Delete
+    Me.Delete
+End
+
+Public Sub Menu2_Click()
+    ' Programm anzeigen
+    Me.Visible = True
+End
+
+Public Sub Form_Close()
+    ' Alles schließen und beenden
+    TrayIcon1.Delete
+End
+
+Public Sub Menu4_Click()
+    'Programm info
+    Timer1.Stop
+    Message("Indikator-LED zeigt die Lese- und Schreibvorgänge der Systemplatte optisch an", "OK")
+    Timer1.Start
+End

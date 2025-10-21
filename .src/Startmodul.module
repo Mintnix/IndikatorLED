@@ -1,0 +1,9 @@
+' Gambas module file
+
+
+Public Sub Main()
+    'Fenster anzeigen und gleich wiedre verstecken
+    FMain.Show
+    Wait 0.1
+    FMain.Hide
+End
