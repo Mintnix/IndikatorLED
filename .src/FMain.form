@@ -1,10 +1,11 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,41,19)
-  Background = Color.SelectedBackground
+  MoveScaled(0,0,41,16)
+  Background = &H77C09B
   Text = ("Indikator LED Anzeige")
   Icon = Picture["led_blau.png"]
+  Utility = True
   { Menu1 Menu
     Text = ("Menu1")
     Visible = False
@@ -19,36 +20,31 @@
     }
   }
   { Timer1 #Timer
-    #MoveScaled(26,10)
+    #MoveScaled(1,2)
   }
   { TextLabel1 TextLabel
-    MoveScaled(2,2,26,7)
+    MoveScaled(2,1,26,7)
     Font = Font["Bold,14"]
-    Border = Border.Plain
     Text = ("HDD-LED : ")
     Alignment = Align.Center
   }
   { PictureBox1 PictureBox
-    MoveScaled(32,2,7,7)
+    MoveScaled(29,1,7,7)
     Alignment = Align.Center
-    Border = Border.Plain
-  }
-  { TextLabel2 TextLabel
-    MoveScaled(2,10,26,7)
-    Font = Font["Bold,14"]
-    Border = Border.Plain
-    Text = ("USB-LED : ")
-    Alignment = Align.Center
-  }
-  { PictureBox2 PictureBox
-    MoveScaled(32,10,7,7)
-    Alignment = Align.Center
-    Border = Border.Plain
   }
   { TrayIcon1 #TrayIcon
-    #MoveScaled(26,2)
+    #MoveScaled(32,2)
     Visible = True
     Picture = Picture.Load("led_grau.png")
     PopupMenu = "Menu1"
+  }
+  { TextLabel2 TextLabel
+    MoveScaled(2,9,37,5)
+    Font = Font["Italic,11"]
+    Foreground = Color.DarkGray
+    ToolTip = ("Doppelklick auf dieses Textlanbel versteckt das\nFenster wieder, sodass es nur im Tray erscheint.")
+    Border = Border.Plain
+    BorderColor = Color.SoftYellow
+    Alignment = Align.Center
   }
 }

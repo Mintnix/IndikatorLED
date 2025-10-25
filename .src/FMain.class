@@ -17,6 +17,7 @@ Public Sub Form_Open()
     Print "Root-Gerät: "; sResultRoot
     'Timer1.Enabled = True
     PictureBox1.Picture = pLED_GRAU
+    TextLabel2.Text = "Systemplatte ist:  " & sResultRoot
 
     Timer1.Delay = 200
     Timer1.Start
@@ -94,6 +95,11 @@ End
 Public Sub Menu4_Click()
     'Programm info
     Timer1.Stop
-    Message("Indikator-LED zeigt die Lese- und Schreibvorgänge der Systemplatte optisch an", "OK")
+    Message("Indikator-LED zeigt die Lese- und Schreibvorgänge der\nSystemplatte optisch an.", "OK")
     Timer1.Start
+End
+
+Public Sub TextLabel2_DblClick()
+    'Fenster ins Tray verstecken
+    Me.Hide
 End
